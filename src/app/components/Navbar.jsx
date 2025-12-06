@@ -112,7 +112,7 @@ export default function Navbar() {
             {/* Responsive sizing: w-32 on mobile, w-48 on desktop */}
             <div className="relative w-48 sm:w-64 md:w-80 h-12 sm:h-16 transition-all">
               <Image
-                src={logoImg}
+                src={"https://res.cloudinary.com/dift5ej6p/image/upload/v1765016108/logo3_cgzyva.png"}
                 alt="Flute Saga Logo"
                 fill
                 className="object-contain object-left"
