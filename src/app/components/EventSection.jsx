@@ -3,27 +3,27 @@ import { Calendar, MapPin, Clock, Ticket } from 'lucide-react';
 import { useState, useMemo, useCallback } from 'react';
 
 const events = [
-  { 
-    date: '2025-09-15', 
-    title: 'Classical Music Festival', 
+  {
+    date: '2025-09-15',
+    title: 'Classical Music Festival',
     location: 'Mumbai, India',
     venue: 'Royal Opera House',
     time: '7:00 PM',
     type: 'Festival',
     status: 'Available'
   },
-  { 
-    date: '2025-10-10', 
-    title: 'Solo Flute Recital', 
+  {
+    date: '2025-10-10',
+    title: 'Solo Flute Recital',
     location: 'Delhi, India',
     venue: 'India Habitat Centre',
     time: '6:30 PM',
     type: 'Solo Performance',
     status: 'Early Bird'
   },
-  { 
-    date: '2025-11-22', 
-    title: 'Raag Jugalbandi Evening', 
+  {
+    date: '2025-11-22',
+    title: 'Raag Jugalbandi Evening',
     location: 'Jodhpur, India',
     venue: 'Mehrangarh Fort',
     time: '8:00 PM',
@@ -34,8 +34,8 @@ const events = [
 
 // Simplified animation variants
 const itemVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     y: 20
   },
   visible: {
@@ -52,14 +52,14 @@ export default function OptimizedEventsSection() {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Memoize events and formatted dates to prevent recalculation
-  const formattedEvents = useMemo(() => 
+  const formattedEvents = useMemo(() =>
     events.map(event => ({
       ...event,
-      formattedDate: new Date(event.date).toLocaleDateString('en-US', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+      formattedDate: new Date(event.date).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       })
     })), []);
 
@@ -106,7 +106,7 @@ export default function OptimizedEventsSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
           />
-          
+
           <p className="mt-6 text-lg text-gray-700 max-w-2xl mx-auto bg-white/60 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-100/50">
             Join us for enchanting evenings of classical music and soulful melodies
           </p>

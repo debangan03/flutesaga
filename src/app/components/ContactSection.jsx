@@ -15,8 +15,8 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     y: 30,
     scale: 0.95
   },
@@ -96,13 +96,13 @@ export default function ContactSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-center mb-16 relative"
         >
-          <motion.h2 
+          <motion.h2
             className="text-5xl md:text-6xl font-serif bg-gradient-to-r from-amber-800 via-orange-700 to-yellow-700 bg-clip-text text-transparent mb-6"
-            animate={{ 
+            animate={{
               backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
             }}
-            transition={{ 
-              duration: 8, 
+            transition={{
+              duration: 8,
               repeat: Infinity,
               ease: "easeInOut"
             }}
@@ -117,7 +117,7 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.5 }}
           />
-          
+
           <motion.p
             className="mt-6 text-lg text-gray-700 max-w-2xl mx-auto bg-white/60 backdrop-blur-sm px-6 py-3 rounded-2xl border border-amber-100/50"
             initial={{ opacity: 0, y: 20 }}
@@ -161,7 +161,7 @@ export default function ContactSection() {
               </motion.div>
 
               <div className="flex items-center gap-4 mb-4">
-                <motion.div 
+                <motion.div
                   className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg"
                   whileHover={{ rotate: 10, scale: 1.1 }}
                   transition={{ duration: 0.2 }}
@@ -173,9 +173,9 @@ export default function ContactSection() {
                   <p className="text-gray-600 text-sm">Send us a message</p>
                 </div>
               </div>
-              
-              <motion.a 
-                href="mailto:bharatraj@email.com" 
+
+              <motion.a
+                href="mailto:bharatraj@email.com"
                 className="text-lg text-gray-700 hover:text-transparent hover:bg-gradient-to-r hover:from-amber-700 hover:to-orange-700 hover:bg-clip-text transition-all duration-300 font-medium"
                 whileHover={{ x: 5 }}
               >
@@ -212,7 +212,7 @@ export default function ContactSection() {
               </motion.div>
 
               <div className="flex items-center gap-4 mb-4">
-                <motion.div 
+                <motion.div
                   className="w-12 h-12 bg-gradient-to-br from-orange-500 to-yellow-600 rounded-2xl flex items-center justify-center shadow-lg"
                   whileHover={{ rotate: 10, scale: 1.1 }}
                   transition={{ duration: 0.2 }}
@@ -224,9 +224,9 @@ export default function ContactSection() {
                   <p className="text-gray-600 text-sm">Call for immediate response</p>
                 </div>
               </div>
-              
-              <motion.a 
-                href="tel:+1234567890" 
+
+              <motion.a
+                href="tel:+1234567890"
                 className="text-lg text-gray-700 hover:text-transparent hover:bg-gradient-to-r hover:from-amber-700 hover:to-orange-700 hover:bg-clip-text transition-all duration-300 font-medium"
                 whileHover={{ x: 5 }}
               >
@@ -296,11 +296,11 @@ export default function ContactSection() {
 
               <h3 className="text-3xl font-serif text-amber-900 mb-6">Follow the Journey</h3>
               <p className="text-gray-700 mb-8 leading-relaxed">
-                Stay connected and experience the magic of music through our social channels. 
+                Stay connected and experience the magic of music through our social channels.
                 Join thousands of music lovers worldwide!
               </p>
-              
-              <motion.div 
+
+              <motion.div
                 className="flex flex-wrap gap-4 justify-center"
                 variants={containerVariants}
                 initial="hidden"
@@ -319,8 +319,8 @@ export default function ContactSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     variants={socialVariants}
-                    whileHover={{ 
-                      scale: 1.1, 
+                    whileHover={{
+                      scale: 1.1,
                       y: -3,
                       boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)"
                     }}
@@ -363,11 +363,30 @@ export default function ContactSection() {
 
               <div className="relative z-10">
                 <h3 className="text-3xl font-serif mb-4">Ready to Create Magic?</h3>
-                <p className="text-amber-100 mb-6 leading-relaxed">
-                  Whether it's a concert, wedding, corporate event, or private performance, 
-                  let's bring the enchanting sounds of classical music to your special moments.
-                </p>
-                
+                <div className="text-amber-100 mb-8 space-y-4">
+                  <p className="leading-relaxed">
+                    Elevate your events with the soulful resonance of the Bansuri. Available for:
+                  </p>
+                  <ul className="grid sm:grid-cols-2 gap-3 text-sm font-medium text-amber-50/90">
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                      Classical Concerts
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                      Private Home Concerts (Baithaks)
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                      Corporate Events
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                      Destination Weddings
+                    </li>
+                  </ul>
+                </div>
+
                 <motion.button
                   className="bg-white text-amber-700 font-semibold px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3 mx-auto"
                   whileHover={{ scale: 1.05, backgroundColor: '#fef3c7' }}

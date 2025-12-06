@@ -1,58 +1,53 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
-import { Menu, X, Volume2, VolumeX } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from '@/components/ui/sheet';
+import { Menu, Volume2, VolumeX, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
-import logoImg from "../../../public/images/logo1.png";
+import logoImg from "../../../public/images/logo3.png";
 import Image from 'next/image';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  /* AUDIO */
+  /* AUDIO SETUP */
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
+    // Initialize Audio
     const audio = new Audio('/audio/bg_audio.mp3');
     audio.loop = true;
-    audio.volume = 0;              // Start SILENT (Chrome only allows this)
+    audio.volume = 0; // Start silent for autoplay permission
     audioRef.current = audio;
 
-    // Autoplay allowed because volume is 0
-    audio.play().then(() => {
-      console.log("Muted autoplay started — Chrome approved.");
-    }).catch(() => console.log("Muted autoplay blocked — fallback will handle."));
+    audio.play()
+      .then(() => console.log("Audio initialized"))
+      .catch(() => console.log("Autoplay blocked - waiting for interaction"));
 
-    // Fade in audio on FIRST interaction ONLY
     const unmuteAndFade = () => {
       let v = 0;
       const fade = setInterval(() => {
-        if (v < 0.5) {             // Target volume = 0.5 (change if needed)
+        if (v < 0.5) {
           v += 0.05;
-          audio.volume = v;
+          if (audioRef.current) audioRef.current.volume = v;
         } else clearInterval(fade);
       }, 120);
 
       setIsPlaying(true);
-
-      window.removeEventListener("click", unmuteAndFade);
-      window.removeEventListener("scroll", unmuteAndFade);
-      window.removeEventListener("touchstart", unmuteAndFade);
+      ['click', 'scroll', 'touchstart'].forEach(evt =>
+        window.removeEventListener(evt, unmuteAndFade)
+      );
     };
 
-    window.addEventListener("click", unmuteAndFade, { once: true });
-    window.addEventListener("scroll", unmuteAndFade, { once: true });
-    window.addEventListener("touchstart", unmuteAndFade, { once: true });
+    ['click', 'scroll', 'touchstart'].forEach(evt =>
+      window.addEventListener(evt, unmuteAndFade, { once: true })
+    );
 
     return () => {
       audio.pause();
-      window.removeEventListener("click", unmuteAndFade);
-      window.removeEventListener("scroll", unmuteAndFade);
-      window.removeEventListener("touchstart", unmuteAndFade);
     };
   }, []);
 
@@ -67,9 +62,9 @@ export default function Navbar() {
     }
   };
 
-  /* SCROLL BEHAVIOUR */
+  /* SCROLL LISTENER */
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 70);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -78,91 +73,157 @@ export default function Navbar() {
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'gallery', label: 'Gallery' },
-    { id: 'videos', label: 'Videos' },
-    { id: 'events', label: 'Events' }
+    { id: 'videos', label: 'Videos' }
   ];
+
+  // Mobile Menu Animation Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1 }
+  };
 
   return (
     <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 100, damping: 20 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
-        ${isScrolled ? "bg-white/95 backdrop-blur-lg shadow-sm border-b" : "bg-transparent"}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b border-transparent
+        ${isScrolled
+          ? "bg-white/80 backdrop-blur-md shadow-sm border-stone-200 py-2"
+          : "bg-transparent py-4"}
       `}
     >
-      <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-24">
+      {/* Standard padding is px-4, but reduced to px-3 for mobile to 
+         push logo closer to the 'extreme' left as requested.
+      */}
+      <div className="w-full mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center">
 
-          {/* LOGO */}
-          <Link href="/" className="relative flex items-center">
-            <Image src={logoImg} alt="Flute Saga Logo" width={240} height={50} priority />
+          {/* --- LOGO --- */}
+          <Link href="/" className="relative z-50 flex items-center shrink-0">
+            {/* Responsive sizing: w-32 on mobile, w-48 on desktop */}
+            <div className="relative w-48 sm:w-64 md:w-80 h-12 sm:h-16 transition-all">
+              <Image
+                src={logoImg}
+                alt="Flute Saga Logo"
+                fill
+                className="object-contain object-left"
+                priority
+              />
+            </div>
           </Link>
 
-          {/* DESKTOP MENU */}
-          <div className="hidden lg:flex items-center space-x-3">
-            {navItems.map((item, index) => (
-              <motion.a
+          {/* --- DESKTOP MENU --- */}
+          <div className="hidden lg:flex items-center gap-1">
+            {navItems.map((item) => (
+              <Link
                 key={item.id}
                 href={`#${item.id}`}
-                initial={{ opacity: 0, y: -15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.08 }}
-                className={`px-4 py-2 uppercase text-[13px] tracking-wider rounded-lg transition-all
-                  ${isScrolled ? "text-stone-800 hover:bg-amber-50 hover:text-amber-700" : "text-black hover:bg-white/40"}
+                className={`px-4 py-2 uppercase text-[12px] font-medium tracking-widest rounded-full transition-all duration-300
+                  ${isScrolled
+                    ? "text-stone-600 hover:text-amber-800 hover:bg-amber-50"
+                    : "text-stone-900 hover:bg-white/50"}
                 `}
               >
                 {item.label}
-              </motion.a>
+              </Link>
             ))}
           </div>
 
-          {/* DESKTOP: AUDIO + CONTACT */}
-          <div className="hidden lg:flex items-center gap-5">
-            <motion.button
+          {/* --- DESKTOP ACTIONS --- */}
+          <div className="hidden lg:flex items-center gap-4">
+            <button
               onClick={toggleAudio}
-              whileHover={{ scale: 1.12 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-2 rounded-full border bg-white/60 hover:bg-white shadow-sm"
+              className={`p-2 rounded-full transition-all duration-300 border
+                ${isScrolled ? "border-stone-200 text-stone-600" : "border-white/20 bg-white/40 text-stone-800"}
+                hover:scale-105 active:scale-95
+              `}
             >
-              {isPlaying ? <Volume2 size={20}/> : <VolumeX size={20}/>}
-            </motion.button>
+              {isPlaying ? <Volume2 size={18} /> : <VolumeX size={18} />}
+            </button>
 
-            <Button asChild className="bg-amber-700 hover:bg-amber-800 text-white px-6 rounded-full font-semibold">
+            <Button asChild className="bg-amber-700 hover:bg-amber-800 text-white rounded-full px-6 shadow-lg shadow-amber-700/20">
               <Link href="#contact">Contact Us</Link>
             </Button>
           </div>
 
-          {/* MOBILE */}
-          <div className="lg:hidden flex items-center gap-3">
-            <button onClick={toggleAudio} className="p-2">
-              {isPlaying ? <Volume2 size={26}/> : <VolumeX size={26}/>}
+          {/* --- MOBILE ACTIONS --- */}
+          <div className="lg:hidden flex items-center gap-2">
+
+            {/* Mobile Audio Toggle */}
+            <button
+              onClick={toggleAudio}
+              className="p-2 text-stone-700 bg-white/50 backdrop-blur-sm rounded-full border border-stone-200/50"
+            >
+              {isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
             </button>
 
+            {/* Mobile Menu Trigger */}
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button size="icon" variant="ghost"><Menu size={28}/></Button>
+                <Button variant="ghost" size="icon" className="text-stone-800 hover:bg-stone-100/50">
+                  <Menu size={28} strokeWidth={1.5} />
+                </Button>
               </SheetTrigger>
 
-              <SheetContent side="right" className="w-full sm:w-80 bg-[#FAF7F2]">
-                <SheetTitle className="sr-only">Menu</SheetTitle>
+              {/* Mobile Menu Content */}
+              <SheetContent
+                side="right"
+                className="w-full sm:w-[400px] bg-[#FAF7F2]/95 backdrop-blur-xl border-l border-stone-200 p-0 overflow-y-auto h-[100dvh]"
+              >
+                <SheetTitle className="sr-only">Mobile Navigation</SheetTitle>
 
-                <div className="mt-12 space-y-4">
-                  {navItems.map(item => (
-                    <a key={item.id}
-                      href={`#${item.id}`}
-                      className="block text-lg uppercase tracking-wider py-3"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {item.label}
-                    </a>
-                  ))}
-                </div>
+                <div className="flex flex-col h-full relative">
 
-                <div className="mt-10 border-t pt-6">
-                  <Button asChild className="w-full bg-amber-700 hover:bg-amber-800 text-white py-3 rounded-full">
-                    <Link href="#contact">Get In Touch</Link>
-                  </Button>
+                  {/* Menu Header with Logo */}
+                  <div className="p-6 pt-8 flex justify-between items-center border-b border-stone-200/50">
+                    <div className="relative w-32 h-10 opacity-90">
+                      <Image src={logoImg} alt="Logo" fill className="object-contain object-left" />
+                    </div>
+                    {/* Close button is auto-rendered by Sheet, but we can customize spacing via padding */}
+                  </div>
+
+                  {/* Menu Links */}
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="show"
+                    className="flex-1 flex flex-col justify-center items-center gap-6 p-6"
+                  >
+                    {navItems.map((item) => (
+                      <motion.a
+                        key={item.id}
+                        variants={itemVariants}
+                        href={`#${item.id}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="group flex items-center gap-3 text-2xl font-light uppercase tracking-widest text-stone-800"
+                      >
+                        <span className="w-0 group-hover:w-4 h-[1px] bg-amber-600 transition-all duration-300"></span>
+                        {item.label}
+                        <span className="w-0 group-hover:w-4 h-[1px] bg-amber-600 transition-all duration-300"></span>
+                      </motion.a>
+                    ))}
+                  </motion.div>
+
+                  {/* Menu Footer */}
+                  <div className="p-8 pb-12 border-t border-stone-200/50 bg-white/30">
+                    <Button asChild className="w-full bg-amber-800 hover:bg-amber-900 text-white py-6 text-lg rounded-xl shadow-xl shadow-amber-900/10">
+                      <Link href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+                        Get In Touch <ArrowRight className="ml-2 w-5 h-5" />
+                      </Link>
+                    </Button>
+                    <p className="text-center text-stone-400 text-xs mt-6 uppercase tracking-widest">
+                      © Flute Saga 2025
+                    </p>
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
