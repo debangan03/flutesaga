@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import Link from 'next/link';
 import { FaInstagram, FaTwitter, FaYoutube, FaFacebook } from 'react-icons/fa';
 
 // Animation Variants
@@ -175,11 +176,11 @@ export default function ContactSection() {
               </div>
 
               <motion.a
-                href="mailto:bharatraj@email.com"
+                href="mailto:flutist.bharat@gmail.com"
                 className="text-lg text-gray-700 hover:text-transparent hover:bg-gradient-to-r hover:from-amber-700 hover:to-orange-700 hover:bg-clip-text transition-all duration-300 font-medium"
                 whileHover={{ x: 5 }}
               >
-                bharatraj@email.com
+                flutist.bharat@gmail.com
               </motion.a>
 
               {/* Bottom Glow */}
@@ -226,11 +227,11 @@ export default function ContactSection() {
               </div>
 
               <motion.a
-                href="tel:+1234567890"
+                href="tel:+917718888818"
                 className="text-lg text-gray-700 hover:text-transparent hover:bg-gradient-to-r hover:from-amber-700 hover:to-orange-700 hover:bg-clip-text transition-all duration-300 font-medium"
                 whileHover={{ x: 5 }}
               >
-                +123-456-7890
+                +91-77188-88818
               </motion.a>
 
               {/* Bottom Glow */}
@@ -308,10 +309,9 @@ export default function ContactSection() {
                 viewport={{ once: true }}
               >
                 {[
-                  { icon: FaYoutube, color: 'from-red-500 to-red-600', href: 'https://youtube.com/@flutistbharatraj', label: 'YouTube' },
-                  { icon: FaInstagram, color: 'from-pink-500 to-purple-600', href: 'https://instagram.com', label: 'Instagram' },
-                  { icon: FaFacebook, color: 'from-blue-500 to-blue-600', href: 'https://facebook.com', label: 'Facebook' },
-                  { icon: FaTwitter, color: 'from-sky-500 to-blue-500', href: 'https://twitter.com', label: 'Twitter' }
+                  { icon: FaYoutube, color: 'from-red-500 to-red-600', href: 'https://www.youtube.com/channel/UCKUDIc7owKxJLBLYC-rl2fg', label: 'YouTube' },
+                  { icon: FaInstagram, color: 'from-pink-500 to-purple-600', href: 'https://www.instagram.com/flutist.bharat', label: 'Instagram' },
+                  { icon: FaFacebook, color: 'from-blue-500 to-blue-600', href: 'https://www.facebook.com/bhart.raj.8', label: 'Facebook' }
                 ].map((social, index) => (
                   <motion.a
                     key={index}
@@ -393,7 +393,8 @@ export default function ContactSection() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Mail className="w-5 h-5" />
-                  <span>Book a Performance</span>
+                  <Link href={'https://api.whatsapp.com/send/?phone=7718888818&text&type=phone_number&app_absent=0'} target="_blank"
+                    rel="noopener noreferrer"> Book a Performance</Link>
                 </motion.button>
               </div>
             </motion.div>

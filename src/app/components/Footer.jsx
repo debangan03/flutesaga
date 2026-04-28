@@ -15,8 +15,8 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     y: 20,
     scale: 0.95
   },
@@ -49,9 +49,8 @@ const socialVariants = {
 export default function Footer() {
   // Define social media data with proper component references
   const socialMedia = [
-    { Icon: FaYoutube, color: 'from-red-500 to-red-600', href: 'https://youtube.com/@flutistbharatraj', label: 'YouTube' },
-    { Icon: FaInstagram, color: 'from-pink-500 to-purple-600', href: 'https://instagram.com', label: 'Instagram' },
-    { Icon: FaTwitter, color: 'from-sky-500 to-blue-500', href: 'https://twitter.com', label: 'Twitter' }
+    { Icon: FaYoutube, color: 'from-red-500 to-red-600', href: 'https://www.youtube.com/channel/UCKUDIc7owKxJLBLYC-rl2fg', label: 'YouTube' },
+    { Icon: FaInstagram, color: 'from-pink-500 to-purple-600', href: 'https://www.instagram.com/flutist.bharat', label: 'Instagram' }
   ];
 
   return (
@@ -110,7 +109,7 @@ export default function Footer() {
           </motion.p>
 
           {/* Contact Email */}
-          <motion.div
+          {/* <motion.div
             variants={itemVariants}
             whileHover={{ y: -3, scale: 1.02 }}
             className="group bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-xl border border-amber-100/50 relative overflow-hidden inline-block"
@@ -126,10 +125,10 @@ export default function Footer() {
               className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
               style={{ borderRadius: '0 0 24px 24px' }}
             />
-          </motion.div>
+          </motion.div> */}
 
           {/* Social Media Icons */}
-          <motion.div
+          {/* <motion.div
             className="flex flex-wrap gap-4 justify-center"
             variants={containerVariants}
             initial="hidden"
@@ -143,8 +142,8 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 variants={socialVariants}
-                whileHover={{ 
-                  scale: 1.1, 
+                whileHover={{
+                  scale: 1.1,
                   y: -3,
                   boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)"
                 }}
@@ -161,7 +160,7 @@ export default function Footer() {
                 <span className="sr-only">{social.label}</span>
               </motion.a>
             ))}
-          </motion.div>
+          </motion.div> */}
         </motion.div>
 
         {/* Floating Musical Notes */}

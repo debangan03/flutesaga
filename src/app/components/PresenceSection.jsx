@@ -151,7 +151,7 @@ export default function PresenceSection() {
                                 <div className="relative bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-white/50 shadow-xl">
                                     <iframe
                                         style={{ borderRadius: '24px' }}
-                                        src="https://open.spotify.com/embed/artist/0JcWwqoBu9fbk7dclxLiD4?utm_source=generator&theme=0"
+                                        src="https://open.spotify.com/embed/artist/7LpcOYYae7BrXoFE47npgB?utm_source=generator&theme=0"
                                         width="100%"
                                         height="352"
                                         frameBorder="0"
@@ -166,7 +166,7 @@ export default function PresenceSection() {
                                             "Let the bamboo flute be your companion in moments of solitude and peace."
                                         </p>
                                         <a
-                                            href="https://open.spotify.com/artist/0JcWwqoBu9fbk7dclxLiD4"
+                                            href="https://open.spotify.com/artist/7LpcOYYae7BrXoFE47npgB"
                                             target="_blank"
                                             rel="noreferrer"
                                             className="group flex items-center gap-2 px-6 py-3 bg-green-500 text-white rounded-full text-sm font-bold tracking-wide shadow-lg shadow-green-500/25 hover:bg-green-600 hover:-translate-y-0.5 transition-all"
