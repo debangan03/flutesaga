@@ -48,6 +48,8 @@ const socialVariants = {
 };
 
 export default function ContactSection() {
+  const message = "Hello, I would like to book a performance";
+  const url = `https://api.whatsapp.com/send/?phone=7718888818&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
   return (
     <motion.section
       id="contact"
@@ -393,7 +395,7 @@ export default function ContactSection() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Mail className="w-5 h-5" />
-                  <Link href={'https://api.whatsapp.com/send/?phone=7718888818&text&type=phone_number&app_absent=0'} target="_blank"
+                  <Link href={url} target="_blank"
                     rel="noopener noreferrer"> Book a Performance</Link>
                 </motion.button>
               </div>
